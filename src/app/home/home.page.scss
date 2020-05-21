@@ -1,0 +1,79 @@
+#container {
+  text-align: center;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 75%;
+  transform: translateY(-50%);
+}
+
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+
+
+  color: #8c8c8c;
+
+  margin: 0;
+}
+#convert {
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+#container a {
+  text-decoration: none;
+}
+
+#title {
+  text-align: center;
+}
+
+#image {
+  width: 800px;
+  display:block;
+  margin:auto;
+}
+
+#myfile {
+  color: red;
+}
+
+#about {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 90%;
+}
+
+h1{
+  font-family: "Avocado Creamy";
+  font-size: xx-large;
+}
+#about p{
+  margin-left: 20%;
+  margin-right: 20%;
+  text-align: justify;
+}
+#about .instruction{
+  margin-left: 25%;
+}
+
+#footer {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 140%;
+}
