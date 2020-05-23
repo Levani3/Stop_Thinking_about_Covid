@@ -15,6 +15,7 @@ from moviepy.editor import *
 from pydub import AudioSegment
 import moviepy.editor as mpe
 from src import audio, image
+from flask import Flask, request
 
 
 
@@ -24,6 +25,9 @@ from google.cloud.speech_v1p1beta1 import enums
 from google.cloud.vision import types
 from google.cloud import speech_v1 as speech
 from PIL import Image, ImageDraw, ImageFont
+
+app = Flask(__name__)
+@app.route('/', methods=['GET'])
 
 def isAudio(ruta):
 
@@ -64,10 +68,10 @@ def isVideo(ruta):
     print("RECONVERTINT EL VIDEO")
     image.convert_frames_to_video(output_path)
 
-    """    # Inserir audio en un video
+    # Inserir audio en un video
     print("INSERINT AUDIO AL VIDEO")
     cmd = 'ffmpeg -y -i /Users/pol/Desktop/GCV/src/audio_out_file.wav  -r 30 -i /Users/pol/Desktop/GCV/src/video_name2.mp4  -filter:a aresample=async=1 -c:a flac -c:v copy av.mkv'
-    subprocess.call(cmd, shell=True)"""
+    subprocess.call(cmd, shell=True)
 
 
 def isImage(ruta):
@@ -83,6 +87,7 @@ if __name__ == '__main__':
     parser.add_argument('detect_file', help='The image for text detection.')
     parser.add_argument('-out_file', help='Optional output file', default=0)
     args = parser.parse_args()"""
+    #app.run(host='localhost', port=8080, debug=True)
 
     print("Introdueixi la direccio del arxiu que vol convertir")
     ruta = input()

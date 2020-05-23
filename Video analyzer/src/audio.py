@@ -1,11 +1,10 @@
-
 import io
 from moviepy.editor import *
 from pydub import AudioSegment
 
 from google.cloud import vision, speech_v1
 from google.cloud.speech_v1p1beta1 import enums
-from google.cloud import speech_v1 as speech
+
 
 
 
@@ -13,32 +12,41 @@ from google.cloud import speech_v1 as speech
 #MODUL AUDIO
 #####################
 
-def speech_to_text(config, audio):
+def print_word_offsets(alternative, canco):
 
-    client = speech.SpeechClient()
-    response = client.recognize(config, audio)
-    print_sentences(response)
-
-def print_word_offsets(alternative):
     for word in alternative.words:
         start_ms = word.start_time.ToMilliseconds()
         end_ms = word.end_time.ToMilliseconds()
         word = word.word
+        aux = word.upper()
+        print(aux)
+        if aux == "coronavirus" or aux == "CORONAVIRUS" or aux == "COVID" or aux == "covid" or aux == "Coronavirus" or aux == "VIRUS" or aux=="CASOS":
+            print(f'{start_ms/1000:>7.3f}',
+                f'{end_ms/1000:>7.3f}',
+                f'{word}',
+                sep=' | ')
+            canco = saber_temps(word, start_ms, end_ms, canco)
 
-        print(f'{start_ms/1000:>7.3f}',
-            f'{end_ms/1000:>7.3f}',
-            f'{word}',
-            sep=' | ')
+    canco.export("audio_out_file.wav", format="wav")
+
+
+
 
 def print_sentences(response):
+    canco = AudioSegment.from_wav("/Users/pol/Desktop/GCV/src/audio.wav")
+    canco.export("audio_out_file.wav", format="wav")
     for result in response.results:
+        canco1 = AudioSegment.from_wav("/Users/pol/Desktop/GCV/src/audio_out_file.wav")
         best_alternative = result.alternatives[0]
         transcript = best_alternative.transcript
         confidence = best_alternative.confidence
         print('-' * 80)
         print(f'Transcript: {transcript}')
         print(f'Confidence: {confidence:.0%}')
-        print_word_offsets(best_alternative)
+        print_word_offsets(best_alternative, canco1)
+
+
+
 
 def sample_recognize(local_file_path):
         """
@@ -84,20 +92,16 @@ def sample_recognize(local_file_path):
             #print(result)
             print_sentences(response)
 
-def saber_temps(paraula,start, end):
-    print("LA PARAULA QUE ESTEM BUSCANT ES: " + paraula)
-    print("EL SEU TEMPS INICIAL ES: " + str(start))
-    print("EL SEU TEMPS FINAL ES: " + str(end))
-
-    canco = AudioSegment.from_wav("/Users/pol/Desktop/GCV/src/audio.wav")
-
+def saber_temps(paraula,start, end, canco):
+    print("HOLA ENTRO AL CENSURADOR DAUDIO")
     duracio=end-start
     primera_part = canco[:start]
     ultima_part = canco[end:]
     segment = AudioSegment.silent(duration=duracio)
 
     final_song = primera_part + segment + ultima_part
-    final_song.export("audio_out_file.wav", format="wav")
+    #final_song.export("audio_out_file.wav", format="wav")
+    return final_song
 
 
 
