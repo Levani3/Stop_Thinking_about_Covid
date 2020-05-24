@@ -27,16 +27,16 @@ def print_word_offsets(alternative, canco):
                 sep=' | ')
             canco = saber_temps(word, start_ms, end_ms, canco)
 
-    canco.export("audio_out_file.wav", format="wav")
+    canco.export("../AudioOut/audio_out_file.wav", format="wav")
 
 
 
 
 def print_sentences(response):
-    canco = AudioSegment.from_wav("/Users/pol/Desktop/GCV/src/audio.wav")
+    canco = AudioSegment.from_wav("../src/audio.wav")
     canco.export("audio_out_file.wav", format="wav")
     for result in response.results:
-        canco1 = AudioSegment.from_wav("/Users/pol/Desktop/GCV/src/audio_out_file.wav")
+        canco1 = AudioSegment.from_wav("../src/audio_out_file.wav")
         best_alternative = result.alternatives[0]
         transcript = best_alternative.transcript
         confidence = best_alternative.confidence
@@ -55,7 +55,7 @@ def sample_recognize(local_file_path):
         Args:
           local_file_path Path to local audio file, e.g. /path/audio.wav
         """
-        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/Users/pol/Desktop/GCV/credentials/credentials.json'
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '../credentials/credentials.json'
         client = speech_v1.SpeechClient()
 
         # local_file_path = 'resources/brooklyn_bridge.raw'

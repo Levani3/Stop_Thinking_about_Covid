@@ -24,7 +24,7 @@ class FeatureType(Enum):
     starti = []
 
 
-def draw_boxes(image, bounds, color):
+def draw_boxes(image, bounds, color, nom):
     """Draw a border around the image using the hints in the vector list."""
 
     draw = ImageDraw.Draw(image)
@@ -39,7 +39,7 @@ def draw_boxes(image, bounds, color):
             bound.vertices[3].x, bound.vertices[3].y], "black", color)
 
 
-        draw.text(xy=( bound.vertices[0].x, bound.vertices[0].y), text="NOPE", fill=(255, 255, 255), font=font_type)
+        draw.text(xy=( bound.vertices[0].x, bound.vertices[0].y), text=nom, fill=(255, 255, 255), font=font_type)
 
 
     #image.open()
@@ -91,7 +91,7 @@ def get_document_bounds(image_file, feature, words_to_find):
     print(bounds)
     return bounds
 
-def render_doc_text(filein, fileout):
+def render_doc_text(filein, fileout, nom):
 
     image = Image.open(filein)
     """bounds = get_document_bounds(filein, FeatureType.BLOCK)
@@ -100,7 +100,8 @@ def render_doc_text(filein, fileout):
     draw_boxes(image, bounds, 'red')"""
     words_to_find = ["coronavirus", "CORONAVIRUS", "Coronavirus", "COVID-19", "COVID - 19", "COVID", "VIRUS", "Virus", "virus", "Covid-19", "Covid"]
     bounds = get_document_bounds(filein, FeatureType.WORD, words_to_find)
-    draw_boxes(image, bounds, 'red')
+    wordCensored = nom
+    draw_boxes(image, bounds, 'red', wordCensored)
 
     if fileout != 0:
         image.save(fileout)
@@ -123,7 +124,7 @@ def convert_frames_to_video(frames_path):
     frame = cv2.imread(os.path.join(frames_path, images[0]))
     height, width, layers = frame.shape
 
-    video = cv2.VideoWriter("video_name2.mp4", 0x7634706d, 24, (width, height))
+    video = cv2.VideoWriter("video_name.mp4", 0x7634706d, 24, (width, height))
 
     for image in images:
         video.write(cv2.imread(os.path.join(frames_path, image)))

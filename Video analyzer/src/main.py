@@ -38,9 +38,9 @@ def isAudio(ruta):
     song.export("./src3", format="flac")
     print("PROCESSANT EL TEU AUDIO SIUSPLAU ESPERI")
     # Crida a l'api de speech to text
-    audio.sample_recognize('/Users/pol/Desktop/GCV/src/src3')
+    audio.sample_recognize('../src/src3')
 
-def isVideo(ruta):
+def isVideo(ruta, nomVideo):
 
     # Extreure l'audio d'un video
     print("EXTRAIENT L'AUDIO DEL VIDEO")
@@ -51,18 +51,18 @@ def isVideo(ruta):
 
     print("EXTRAIENT ELS FRAMES DEL VIDEO")
     input_filename = os.path.abspath(ruta)
-    output_filename = os.path.abspath("../ouputVideo")
+    output_filename = os.path.abspath("../src/outputvideo")
     #Extreure els frames d'un video
     image.extract_frames_from_video(input_filename, output_filename)
 
-    input_path = Path('/Users/pol/Desktop/GCV/ouputVideo')
-    output_path = Path('/Users/pol/Desktop/GCV/outputs')
+    input_path = Path('../src/outputvideo')
+    output_path = Path('../src/output')
     input_frames = input_path.glob('*.png')
     # crida a l'api de Text images per analisi de video
     print("PROCESSANT EL TEU VIDEO SIUSPLAU ESPERI")
     for in_frame in input_frames:
         out_frame = output_path / in_frame.name
-        image.render_doc_text(in_frame, out_frame)
+        image.render_doc_text(in_frame, out_frame, nomVideo)
 
     # Convertim frames en video
     print("RECONVERTINT EL VIDEO")
@@ -70,17 +70,17 @@ def isVideo(ruta):
 
     # Inserir audio en un video
     print("INSERINT AUDIO AL VIDEO")
-    cmd = 'ffmpeg -y -i /Users/pol/Desktop/GCV/src/audio_out_file.wav  -r 30 -i /Users/pol/Desktop/GCV/src/video_name2.mp4  -filter:a aresample=async=1 -c:a flac -c:v copy av.mkv'
+    cmd = 'ffmpeg -y -i ../AudioOut/audio_out_file.wav -r 30 -i ../src/video_name.mp4  -filter:a aresample=async=1 -c:a flac -c:v copy ../VideoOut/output.mkv'
     subprocess.call(cmd, shell=True)
 
 
-def isImage(ruta):
+def isImage(ruta, nom):
 
 
     input_filename = os.path.abspath(ruta)
-    output_filename = os.path.abspath("../ouputVideo/out.png")
+    output_filename = os.path.abspath("../ImageOut/out.png")
 
-    image.render_doc_text(input_filename, output_filename)
+    image.render_doc_text(input_filename, output_filename, nom)
 
 if __name__ == '__main__':
     """parser = argparse.ArgumentParser()
@@ -97,12 +97,17 @@ if __name__ == '__main__':
         isAudio(ruta)
 
     elif(ruta[-3:]=="png" or ruta[-3:]=="jpg" or ruta[-4:] == "jpeg"):
+
         print("El teu arxiu es una imatge")
-        isImage(ruta)
+        print("Escriu una paraula per censurar la imatge: ")
+        nom = input()
+        isImage(ruta, nom)
 
     elif(ruta[-3:] == "mp4"):
         print("El teu arxiu es un video")
-        isVideo(ruta)
+        print("Escriu una paraula per censurar la imatge: ")
+        nomVideo = input()
+        isVideo(ruta, nomVideo)
 
 
 
