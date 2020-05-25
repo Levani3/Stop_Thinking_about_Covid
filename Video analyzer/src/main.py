@@ -1,30 +1,11 @@
-import argparse
-import cv2
 import os
-import numpy as np
-import string
 import subprocess
-from enum import Enum
-from os.path import isfile, join
-import io
 from pathlib import Path
-import glob
 
-import pydub
-from moviepy.editor import *
+from flask import Flask
 from pydub import AudioSegment
-import moviepy.editor as mpe
+
 from src import audio, image
-from flask import Flask, request
-
-
-
-from google.cloud import vision, speech_v1
-from google.cloud import speech_v1p1beta1
-from google.cloud.speech_v1p1beta1 import enums
-from google.cloud.vision import types
-from google.cloud import speech_v1 as speech
-from PIL import Image, ImageDraw, ImageFont
 
 app = Flask(__name__)
 @app.route('/', methods=['GET'])
@@ -101,13 +82,20 @@ if __name__ == '__main__':
         print("El teu arxiu es una imatge")
         print("Escriu una paraula per censurar la imatge: ")
         nom = input()
+        if nom=="":
+            nom = "NOPE"
         isImage(ruta, nom)
 
     elif(ruta[-3:] == "mp4"):
         print("El teu arxiu es un video")
         print("Escriu una paraula per censurar la imatge: ")
         nomVideo = input()
+        if nomVideo=="":
+            nomVideo = "NOPE"
         isVideo(ruta, nomVideo)
+
+
+
 
 
 
