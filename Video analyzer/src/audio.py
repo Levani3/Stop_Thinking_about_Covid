@@ -19,8 +19,11 @@ def print_word_offsets(alternative, canco):
         end_ms = word.end_time.ToMilliseconds()
         word = word.word
         aux = word.upper()
-        print(aux)
-        if aux == "coronavirus" or aux == "CORONAVIRUS" or aux == "COVID" or aux == "covid" or aux == "Coronavirus" or aux == "VIRUS" or aux=="CASOS":
+        print(f'{start_ms / 1000:>7.3f}',
+              f'{end_ms / 1000:>7.3f}',
+              f'{word}',
+              sep=' | ')
+        if aux == "coronavirus" or aux == "CORONAVIRUS" or aux == "COVID" or aux == "covid" or aux == "Coronavirus" or aux == "VIRUS" or aux=="CASOS" or aux == "CORONA":
             print(f'{start_ms/1000:>7.3f}',
                 f'{end_ms/1000:>7.3f}',
                 f'{word}',
@@ -61,7 +64,7 @@ def sample_recognize(local_file_path):
         # local_file_path = 'resources/brooklyn_bridge.raw'
 
         # The language of the supplied audio
-        language_code = "es-ES"
+        language_code = "en-US"
 
         # When enabled, the first result returned by the API will include a list
         # of words and the start and end time offsets (timestamps) for those words.

@@ -1,0 +1,1 @@
+Aquí van les imatges de sortida

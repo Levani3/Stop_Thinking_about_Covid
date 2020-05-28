@@ -28,7 +28,7 @@ def draw_boxes(image, bounds, color, nom):
     """Draw a border around the image using the hints in the vector list."""
 
     draw = ImageDraw.Draw(image)
-    font_type = ImageFont.truetype("Arial.ttf", 14)
+    font_type = ImageFont.truetype("Arial.ttf", 30)
 
     for bound in bounds:
         print(str(bound))
@@ -98,7 +98,7 @@ def render_doc_text(filein, fileout, nom):
     draw_boxes(image, bounds, 'blue')
     bounds = get_document_bounds(filein, FeatureType.PARA)
     draw_boxes(image, bounds, 'red')"""
-    words_to_find = ["coronavirus", "CORONAVIRUS", "Coronavirus", "COVID-19", "COVID - 19", "COVID", "VIRUS", "Virus", "virus", "Covid-19", "Covid"]
+    words_to_find = ["coronavirus", "CORONAVIRUS", "Coronavirus", "COVID-19", "COVID - 19", "COVID", "VIRUS", "Virus", "virus", "Covid-19", "Covid", "Corona"]
     bounds = get_document_bounds(filein, FeatureType.WORD, words_to_find)
     wordCensored = nom
     draw_boxes(image, bounds, 'red', wordCensored)
